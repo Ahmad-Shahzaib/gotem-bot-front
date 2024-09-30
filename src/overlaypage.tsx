@@ -28,7 +28,7 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
     }
     isFetching.current = true;
     try {
-      const url = `__yourdomain__/get_creation_month_count?userid=${userID}`;
+      const url = `https://api-dapp.gotem.io/get_creation_month_count?userid=${userID}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -43,7 +43,7 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
         setPoints(() => totalCalculatedReward);
 
         // Update user's totalgot
-        await fetch('__yourdomain__/update_user', {
+        await fetch('https://api-dapp.gotem.io/update_user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

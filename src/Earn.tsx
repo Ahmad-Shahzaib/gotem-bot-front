@@ -85,7 +85,7 @@ const App: React.FC = () => {
     if (!userID) return;
 
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, totalgot: points }),
@@ -135,7 +135,7 @@ const App: React.FC = () => {
   }, [walletid]);
 
   const fetchOrAddUser = (userid: string, startparam: string, username: string) => {
-    fetch(`__yourdomain__/get_user?UserId=${userid}`)
+    fetch(`https://api-dapp.gotem.io/get_user?UserId=${userid}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -154,7 +154,7 @@ const App: React.FC = () => {
   const addUser = (userid: string, startparam: string, username: string) => {
     const invitedBy = !startparam || userid === startparam ? null : startparam;
 
-    fetch("__yourdomain__/add_user", {
+    fetch("https://api-dapp.gotem.io/add_user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ UserId: userid, invitedby: invitedBy || undefined, Username: username }),
@@ -170,7 +170,7 @@ const App: React.FC = () => {
 
   const loadPoints = async (userid: string) => {
     try {
-      const response = await fetch(`__yourdomain__/get_user?UserId=${userid}`);
+      const response = await fetch(`https://api-dapp.gotem.io/get_user?UserId=${userid}`);
       const data = await response.json();
       if (data && data.data && data.data.totalgot !== undefined) {
         setPoints(data.data.totalgot); // Set the points from the backend
@@ -207,7 +207,7 @@ const App: React.FC = () => {
 
   const saveTaskCompletion = async (taskKey: string, column: string, reward: number) => {
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, [column]: "Done" }),
@@ -245,7 +245,7 @@ const App: React.FC = () => {
     }
 
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, dailyclaimedtime: now }),
@@ -271,7 +271,7 @@ const App: React.FC = () => {
       showAlert("Not Enough Friends");
     } else if (refertotalStatus === "Approve") {
       try {
-        await fetch("__yourdomain__/update_user", {
+        await fetch("https://api-dapp.gotem.io/update_user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ UserId: userID, Refertotal: "Done" }),

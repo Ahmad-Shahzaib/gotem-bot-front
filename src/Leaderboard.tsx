@@ -57,7 +57,7 @@ const LeaderboardPage: React.FC = () => {
     // Fetch latest leaderboard data from the server
     const fetchLeaderboardData = async () => {
       try {
-        const response = await fetch(`__yourdomain__/get_user_ranking?UserId=${userID}`);
+        const response = await fetch(`https://api-dapp.gotem.io/get_user_ranking?UserId=${userID}`);
         const data = await response.json();
 
         if (data.requested_user) {

@@ -121,7 +121,7 @@ const App: React.FC = () => {
     if (!userID) return;
 
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, totalgot: points }),
@@ -173,7 +173,7 @@ const App: React.FC = () => {
   ) => {
     try {
       const response = await fetch(
-        `__yourdomain__/get_user?UserId=${userid}`
+        `https://api-dapp.gotem.io/get_user?UserId=${userid}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -196,7 +196,7 @@ const App: React.FC = () => {
     const invitedBy = !startparam || userid === startparam ? null : startparam;
 
     try {
-      await fetch("__yourdomain__/add_user", {
+      await fetch("https://api-dapp.gotem.io/add_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -216,7 +216,7 @@ const App: React.FC = () => {
   const loadPoints = async (userid: string) => {
     try {
       const response = await fetch(
-        `__yourdomain__/get_user?UserId=${userid}`
+        `https://api-dapp.gotem.io/get_user?UserId=${userid}`
       );
       const data = await response.json();
       if (data && data.data && data.data.totalgot !== undefined) {
@@ -266,7 +266,7 @@ const App: React.FC = () => {
     reward: number
   ) => {
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, [column]: "Done" }),
@@ -320,7 +320,7 @@ const App: React.FC = () => {
       try {
         // API call to check user's status in the Telegram chat
         const response = await fetch(
-          `__yourdomain__/check_telegram_status?user_id=${userId}&chat_id=${chatId}`
+          `https://api-dapp.gotem.io/check_telegram_status?user_id=${userId}&chat_id=${chatId}`
         );
         const data = await response.json();
 
@@ -389,7 +389,7 @@ const App: React.FC = () => {
     }
 
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UserId: userID, dailyclaimedtime: now }),
@@ -418,7 +418,7 @@ const App: React.FC = () => {
       showAlert("Not Enough Friends");
     } else if (refertotalStatus === "Approve") {
       try {
-        await fetch("__yourdomain__/update_user", {
+        await fetch("https://api-dapp.gotem.io/update_user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ UserId: userID, Refertotal: "Done" }),

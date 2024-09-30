@@ -12,7 +12,7 @@ const FriendsPage: React.FC = () => {
   const FRIEND_REWARD = 3000; // Points reward per new friend
 
   // Invitation link
-  const invitationLink = `___yourdirectapplink__?startapp=${encodeURIComponent(
+  const invitationLink = `t.me/gotEM_Network_bot/gotEM?startapp=${encodeURIComponent(
     userID
   )}`;
 
@@ -44,7 +44,7 @@ const FriendsPage: React.FC = () => {
   // Function to update the `referrewarded` count
   const updateReferrewarded = async (newReferrewardedCount: number) => {
     try {
-      await fetch("__yourdomain__/update_user", {
+      await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const FriendsPage: React.FC = () => {
   const fetchFriends = async () => {
     try {
       const response = await fetch(
-        `__yourdomain__/get_invitations?UserId=${userID}`,
+        `https://api-dapp.gotem.io/get_invitations?UserId=${userID}`,
         {
           method: "GET",
           headers: {
