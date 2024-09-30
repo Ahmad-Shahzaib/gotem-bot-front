@@ -8,7 +8,7 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <TonConnectUIProvider manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json"
+    <TonConnectUIProvider manifestUrl="https://raw.githubusercontent.com/nio809/Walletconnector/refs/heads/main/manifest.json"
     >
 
     <UserProvider>

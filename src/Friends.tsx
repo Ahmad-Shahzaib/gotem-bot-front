@@ -12,7 +12,7 @@ const FriendsPage: React.FC = () => {
   const FRIEND_REWARD = 3000; // Points reward per new friend
 
   // Invitation link
-  const invitationLink = `t.me/gotEM_Network_bot/gotEM?startapp=${encodeURIComponent(
+  const invitationLink = `https://t.me/gotEMio_bot/app?startapp=${encodeURIComponent(
     userID
   )}`;
 
