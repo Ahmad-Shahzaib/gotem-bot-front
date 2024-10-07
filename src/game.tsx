@@ -19,7 +19,7 @@ const Game: React.FC<GameProps> = ({ onBack }) => {
   const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
 console.log(initData);
   // Create thce URL by appending the userID as a path parameter
-  const gameUrl = `https://towermakergame.netlify.app/?userID=${userID}&initdata=${initData}`;
+  const gameUrl = `https://game.gotem.io/?userID=${userID}&initdata=${initData}`;
 
   useEffect(() => {
     // Fetch game data from the API
