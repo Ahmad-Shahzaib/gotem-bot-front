@@ -28,8 +28,20 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
     }
     isFetching.current = true;
     try {
+      const initData = window.Telegram?.WebApp?.initData || '';
+      if (!initData) {
+        console.error('Telegram initData is missing');
+        return;
+      }
+
       const url = `https://api-dapp.gotem.io/get_creation_month_count?userid=${userID}`;
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Telegram-Init-Data': initData,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -46,14 +58,14 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
         await fetch('https://api-dapp.gotem.io/update_user', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Telegram-Init-Data': initData,
           },
           body: JSON.stringify({
             UserId: userID,
-            totalgot: totalCalculatedReward
-          })
+            totalgot: totalCalculatedReward,
+          }),
         });
-
       }
     } catch (error) {
       const err = error as any;

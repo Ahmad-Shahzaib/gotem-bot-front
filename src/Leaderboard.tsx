@@ -57,7 +57,12 @@ const LeaderboardPage: React.FC = () => {
     // Fetch latest leaderboard data from the server
     const fetchLeaderboardData = async () => {
       try {
-        const response = await fetch(`https://api-dapp.gotem.io/get_user_ranking?UserId=${userID}`);
+        const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+        const response = await fetch(`https://api-dapp.gotem.io/get_user_ranking?UserId=${userID}`, {
+          headers: {
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+          },
+        });
         const data = await response.json();
 
         if (data.requested_user) {

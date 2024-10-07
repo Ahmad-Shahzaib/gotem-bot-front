@@ -12,7 +12,7 @@ const FriendsPage: React.FC = () => {
   const FRIEND_REWARD = 3000; // Points reward per new friend
 
   // Invitation link
-  const invitationLink = `https://t.me/gotEMio_bot/app?startapp=${encodeURIComponent(
+  const invitationLink = `___yourdirectapplink__?startapp=${encodeURIComponent(
     userID
   )}`;
 
@@ -43,11 +43,14 @@ const FriendsPage: React.FC = () => {
 
   // Function to update the `referrewarded` count
   const updateReferrewarded = async (newReferrewardedCount: number) => {
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
     try {
       await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'X-Telegram-Init-Data': initData, // Add initData to headers
+
         },
         body: JSON.stringify({
           UserId: userID,
@@ -62,6 +65,7 @@ const FriendsPage: React.FC = () => {
 
   // Logic to fetch friends and handle rewarding
   const fetchFriends = async () => {
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
     try {
       const response = await fetch(
         `https://api-dapp.gotem.io/get_invitations?UserId=${userID}`,
@@ -69,6 +73,8 @@ const FriendsPage: React.FC = () => {
           method: "GET",
           headers: {
             Accept: "application/json",
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+
           },
         }
       );

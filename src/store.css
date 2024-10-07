@@ -1,0 +1,101 @@
+.store-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d); /* Gradient dark background */
+    color: #ddd; /* Soft white text for better readability */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, sleek font */
+}
+
+.navbar {
+    position: absolute;
+    top: 10%; /* Adjusted to be slightly below the top */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.nav-button {
+    padding: 12px 24px;
+    margin: 80px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #222; /* Darker button background */
+    color: #8ab4f8; /* Soft blue for a futuristic touch */
+    border: 1px solid #555; /* Subtle border for depth */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease; /* Smooth transitions for interactive effects */
+}
+
+.nav-button.active, .nav-button:hover {
+    background-color: #333; /* Slightly lighter on hover and active */
+    transform: translateY(-2px); /* Slight lift effect */
+    border-color: #999; /* Lighter border on hover */
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+    top: 25px; /* Adjusted for better positioning */
+    border: none;
+    background-color: transparent;
+    color: #aaa; /* Soft white for visibility */
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.back-button:hover {
+    color: #fff; /* Brighter white on hover */
+}
+
+.content {
+    margin-top: 60%; /* Adjusted for proper spacing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.card {
+    width: 80%;
+    background-color: #252525; /* Dark card backgrounds */
+    color: #ccc; /* Light text color for contrast */
+    margin: 20px 0;
+    padding: 0px;
+    border-radius: 10px; /* Soft rounded corners for a modern look */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5); /* Deeper and darker shadow for a floating effect */
+    text-align: center;
+}
+
+.card img {
+    width: 60%; /* Adjusted width for better proportion */
+    height: auto;
+    margin: 20px auto; /* Center image within the card */
+    border-radius: 8px; /* Rounded corners for images */
+}
+.card {
+    text-align: center; /* Centering the text inside the card */
+  }
+  
+  .card button {
+    margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #444; /* Darker button background */
+    color: #8ab4f8; /* Default text color */
+    border: 1px solid #666;
+    cursor: pointer;
+    display: block; /* Ensure it's block to take width adjustments */
+    width: fit-content; /* Adjust width to content size */
+    margin: auto; /* Auto margins for horizontal centering */
+  }
+  
+  .buy-text {
+    color: yellow; /* Make only 'Buy' text yellow */
+  }

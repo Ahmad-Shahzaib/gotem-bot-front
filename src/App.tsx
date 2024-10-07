@@ -9,6 +9,7 @@ import {
 import Friends from "./icons/Friends";
 import Modal from "./Modal";
 import Leaderboard from "./Leaderboard";
+import Game from './game';
 import LoadingScreen from "./LoadingScreen";
 import OverlayPage from "./overlaypage";
 import FriendsPage from "./Friends";
@@ -106,7 +107,8 @@ const App: React.FC = () => {
   const [showOverlayPage, setShowOverlayPage] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activePage, setActivePage] = useState("home");
-  const [userAdded, setUserAdded] = useState(false); // New state variable
+  const [userAdded, setUserAdded] = useState(false);
+
 
   const closeModal = () => setModalMessage(null);
   const closeOverlay = () => setShowOverlayPage(false);
@@ -119,11 +121,16 @@ const App: React.FC = () => {
 
   const savePoints = async () => {
     if (!userID) return;
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
 
     try {
       await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'X-Telegram-Init-Data': initData, // Add initData to headers
+        },
         body: JSON.stringify({ UserId: userID, totalgot: points }),
       });
       console.log("Points saved:", points);
@@ -155,11 +162,11 @@ const App: React.FC = () => {
   useEffect(() => {
     Telegram.WebApp.ready();
 
-    const initData = Telegram.WebApp.initDataUnsafe;
+    const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
     const user = {
-      username: initData.user?.username || "Default Username",
-      userid: initData.user?.id || "1989734040",
-      startparam: initData.start_param || "",
+      username: initDataUnsafe.user?.username || "Default Username",
+      userid: initDataUnsafe.user?.id || "1989734040",
+      startparam: initDataUnsafe.start_param || "",
     };
 
     setUserID(user.userid);
@@ -172,8 +179,16 @@ const App: React.FC = () => {
     username: string
   ) => {
     try {
+      const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
       const response = await fetch(
-        `https://api-dapp.gotem.io/get_user?UserId=${userid}`
+        
+        `https://api-dapp.gotem.io/get_user?UserId=${userid}`,
+        {
+          headers: {
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+          },
+        }
       );
       if (response.ok) {
         const data = await response.json();
@@ -194,11 +209,15 @@ const App: React.FC = () => {
     username: string
   ) => {
     const invitedBy = !startparam || userid === startparam ? null : startparam;
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
 
     try {
       await fetch("https://api-dapp.gotem.io/add_user", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'X-Telegram-Init-Data': initData, // Add initData to headers
+        },
         body: JSON.stringify({
           UserId: userid,
           invitedby: invitedBy || undefined,
@@ -213,10 +232,18 @@ const App: React.FC = () => {
     }
   };
 
-  const loadPoints = async (userid: string) => {
+  const loadPoints = async (userid: string) => {        
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
+    
     try {
       const response = await fetch(
-        `https://api-dapp.gotem.io/get_user?UserId=${userid}`
+        `https://api-dapp.gotem.io/get_user?UserId=${userid}`,
+        {
+          headers: {
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+          },
+        }
       );
       const data = await response.json();
       if (data && data.data && data.data.totalgot !== undefined) {
@@ -230,7 +257,6 @@ const App: React.FC = () => {
   };
 
   const loadTaskStatus = (data: any) => {
-    // Create an object with only the task statuses
     const updatedTaskStatus: { [key: string]: "not_started" | "completed" } = {
       YouTube: data.data.youtube === "Done" ? "completed" : "not_started",
       X: data.data.X === "Done" ? "completed" : "not_started",
@@ -265,10 +291,15 @@ const App: React.FC = () => {
     column: string,
     reward: number
   ) => {
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
     try {
       await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'X-Telegram-Init-Data': initData, // Add initData to headers
+        },
         body: JSON.stringify({ UserId: userID, [column]: "Done" }),
       });
 
@@ -291,7 +322,6 @@ const App: React.FC = () => {
     }
   };
 
-  // Function to extract chat_id from the Telegram link
   const extractChatId = (link: string): string => {
     const parts = link.split("/");
     const lastPart = parts[parts.length - 1];
@@ -302,36 +332,36 @@ const App: React.FC = () => {
     taskKey: string,
     link: string
   ) => {
-    // Open the Telegram link in a new tab to allow the user to join the chat
     window.open(link, "_blank");
 
-    // Extract chatId from the Telegram link
     const chatId = extractChatId(link);
-    const userId = userID; // From state
+    const userId = userID;
 
-    // Set task status to 'loading' to show the loader
     setTaskStatus((prevState) => ({
       ...prevState,
       [taskKey]: "loading",
     }));
 
-    // Wait for 6 seconds before checking the status
     setTimeout(async () => {
+      const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
       try {
-        // API call to check user's status in the Telegram chat
         const response = await fetch(
-          `https://api-dapp.gotem.io/check_telegram_status?user_id=${userId}&chat_id=${chatId}`
+          `https://api-dapp.gotem.io/check_telegram_status?user_id=${userId}&chat_id=${chatId}`,
+          {
+            headers: {
+              'X-Telegram-Init-Data': initData, // Add initData to headers
+            },
+          }
         );
         const data = await response.json();
 
         if (data.status === "1") {
-          // User is a member, show claim button
           setTaskStatus((prevState) => ({
             ...prevState,
             [taskKey]: "claimable",
           }));
         } else {
-          // User is not a member, reset status and show modal
           setTaskStatus((prevState) => ({
             ...prevState,
             [taskKey]: "not_started",
@@ -340,7 +370,6 @@ const App: React.FC = () => {
         }
       } catch (error) {
         console.error("Error checking Telegram status:", error);
-        // Handle error, reset status and show modal
         setTaskStatus((prevState) => ({
           ...prevState,
           [taskKey]: "not_started",
@@ -353,13 +382,11 @@ const App: React.FC = () => {
   const handleTaskClick = (taskKey: string, link: string) => {
     window.open(link, "_blank");
 
-    // Set task status to 'loading'
     setTaskStatus((prevState) => ({
       ...prevState,
       [taskKey]: "loading",
     }));
 
-    // After 10 seconds, set task status to 'claimable'
     setTimeout(() => {
       setTaskStatus((prevState) => ({
         ...prevState,
@@ -387,11 +414,16 @@ const App: React.FC = () => {
       );
       return;
     }
+    const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
 
     try {
       await fetch("https://api-dapp.gotem.io/update_user", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'X-Telegram-Init-Data': initData, // Add initData to headers
+        },
         body: JSON.stringify({ UserId: userID, dailyclaimedtime: now }),
       });
 
@@ -417,10 +449,15 @@ const App: React.FC = () => {
     if (refertotalStatus === "NULL" || !refertotalStatus) {
       showAlert("Not Enough Friends");
     } else if (refertotalStatus === "Approve") {
+      const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+
       try {
         await fetch("https://api-dapp.gotem.io/update_user", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+          },
           body: JSON.stringify({ UserId: userID, Refertotal: "Done" }),
         });
 
@@ -444,6 +481,15 @@ const App: React.FC = () => {
   };
   const renderTasks = () => (
     <>
+    <div className="flex justify-center mt-6 px-4">
+  <button
+    className="w-full h-10 bg-blue-500 text-white font-bold rounded-lg"
+    onClick={() => setActivePage("game")}
+  >
+    Play to Earn
+  </button>
+</div>
+
       {/* Daily Section */}
       <div className="mt-6">
         <div className="flex justify-start mt-6 px-4">
@@ -599,6 +645,15 @@ const App: React.FC = () => {
 
             {activePage === "friends" && <FriendsPage />}
             {activePage === "leaderboard" && <Leaderboard />}
+            {activePage === "game" && (
+  <Game
+    onBack={() => {
+      setActivePage("home");
+      loadPoints(userID); // Refetch the user data and update the points from the DB
+    }}
+  />
+)}
+
           </div>
 
           <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-xl bg-black flex justify-around items-center z-50 rounded-3xl text-xs">
