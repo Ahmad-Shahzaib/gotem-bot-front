@@ -11,10 +11,9 @@ const FriendsPage: React.FC = () => {
   const [modalMessage, setModalMessage] = useState<string | null>(null); // Modal state
   const FRIEND_REWARD = 3000; // Points reward per new friend
 
-  // Invitation link
-  const invitationLink = `___yourdirectapplink__?startapp=${encodeURIComponent(
-    userID
-  )}`;
+// Invitation link
+const invitationLink = `https://t.me/gotEMio_bot/app?startapp=${encodeURIComponent(userID)}`;
+
 
   const handleInvite = () => {
     window.open(

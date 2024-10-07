@@ -16,11 +16,11 @@ const Game: React.FC<GameProps> = ({ onBack }) => {
   const [isGameStarted, setIsGameStarted] = useState(false); // State to track game started
   const [isStoreOpen, setIsStoreOpen] = useState(false); // State to track if store is open
   const [gameData, setGameData] = useState({ hookspeed: 1, multiplier: 1 }); // State to store game data
+  const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+console.log(initData);
+  // Create thce URL by appending the userID as a path parameter
+  const gameUrl = `https://towermakergame.netlify.app/?userID=${userID}&initdata=${initData}`;
 
-  // Create the URL by appending the userID as a path parameter
-  const gameUrl = `http://game.gotem.io/?userID=${userID}`;
-
-  // UseEffect to make an API call when component mounts
   useEffect(() => {
     // Fetch game data from the API
     const fetchGameData = async () => {
