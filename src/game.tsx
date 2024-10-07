@@ -24,27 +24,43 @@ const Game: React.FC<GameProps> = ({ onBack }) => {
   useEffect(() => {
     // Fetch game data from the API
     const fetchGameData = async () => {
-      const initData = window.Telegram.WebApp.initData || ''; // Get initData from Telegram WebApp
+      // Get initData from Telegram WebApp
+      const initData = window.Telegram?.WebApp?.initData || ''; 
+    
       try {
+        // Make a POST request to the endpoint
         const response = await fetch('https://api-dapp.gotem.io/gamer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'X-Telegram-Init-Data': initData, // Add initData to headers
-
           },
           body: JSON.stringify({ GamerId: userID }),
         });
+    
+        // Check if the response status is okay
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+    
+        // Parse the response as JSON
         const result = await response.json();
-        setGameData({
-          hookspeed: result.data.hookspeed,
-          multiplier: result.data.multiplier,
-        });
+    
+        // Ensure that result.data exists and set game data accordingly
+        if (result && result.data) {
+          setGameData({
+            hookspeed: result.data.hookspeed, // Default values if undefined
+            multiplier: result.data.multiplier,
+          });
+        } else {
+          console.warn('No game data found in the response');
+        }
       } catch (error) {
+        // Log any error that occurs during the fetch
         console.error('Error fetching game data:', error);
       }
     };
-
+    
     fetchGameData();
   }, [userID]); // Dependency array includes userID to refetch if it changes
 
