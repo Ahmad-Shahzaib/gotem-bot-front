@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect, ReactNode } from
 
 // Declare the global Telegram object to avoid TypeScript errors
 declare global {
-  interface Window { 
+  interface Window {
     Telegram: any;
   }
 }
@@ -47,6 +47,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Ensure the Telegram object is available
     if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
+
+      // Set the WebApp header background color to black
+      window.Telegram.WebApp.setHeaderColor("bg_color", "#000000");
 
       // Extract user information from Telegram API
       const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
