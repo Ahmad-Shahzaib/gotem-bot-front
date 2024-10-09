@@ -1,0 +1,83 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+
+.daily-reward-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+background-color: black; 
+   background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10%; /* Adjust to bring the texts closer to the top */
+    color: white;
+    z-index: 999999999; /* High z-index to ensure visibility above other elements */
+}
+
+.title {
+    font-size: 1.2rem; /* Increased size for better visibility */
+    font-weight: bold;
+    margin-bottom: 0rem; /* Reduced space between title and subtitle */
+}
+
+.subtitle {
+    font-size: 20px; /* Slightly larger for better readability */
+    opacity: 0.2;
+    margin-top: -7rem; /* Adjusted space before the middle text */
+}
+
+.reward-amount-container {
+    margin-top: 10rem; /* Adjusted space before the middle text */
+
+    position: relative;
+    font-size: 5rem; /* Increased size for the reward amount */
+    font-weight: bold;
+    animation-delay: 2s; /* Delay for starting the animation */
+}
+
+.star-icon {
+    position: absolute;
+    top: -30px; /* Adjust for better placement relative to larger text */
+    right: -60px; /* Adjust for better placement */
+    width: 60px; /* Larger icon */
+    animation: animate__zoomInUp 4s ease; /* Slower animation */
+}
+
+.increase-reward-btn, .continue-btn {
+    font-size: 22px; /* Slightly larger buttons */
+    padding: 12px 24px; /* Larger button padding */
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transition for all properties */
+    position: relative; /* Needed for pseudo-elements */
+    overflow: hidden; /* Keeps pseudo-elements inside the button bounds */
+    outline: none; /* Removes default focus outline */
+}
+
+.increase-reward-btn {
+    background-color: #ff0;
+    color: #000;
+    box-shadow: 0 5px #cc0; /* Shadow for 3D effect, adjust color to match darker yellow */
+}
+
+.increase-reward-btn:hover, .increase-reward-btn:focus {
+    background-color: #cc0;
+    box-shadow: 0 5px rgb(247, 247, 247); /* Smaller shadow for pressed effect */
+    transform: translateY(3px); /* Push the button down to mimic pressing */
+}
+
+.continue-btn {
+    background-color: #333;
+    color: #fff;
+    box-shadow: 3px -2px #ffffff; /* Shadow for 3D effect, using a darker grey */
+}
+
+.continue-btn:hover, .continue-btn:focus {
+    background-color: #555;
+    box-shadow: 0 2px #444; /* Smaller shadow for pressed effect */
+    transform: translateY(3px); /* Mimics pressing the button */
+}

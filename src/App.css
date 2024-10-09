@@ -213,3 +213,45 @@
   background-size: 500% 500%;
   animation: gradient-x 4s ease infinite;
 }
+
+
+/* Unique styles for the Play gotEM button with 3D effect */
+.play-gotem-button {
+  background: linear-gradient(45deg, #00243e3a, #f2ff00e2, #524e0040); /* Custom gradient */
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  transform: perspective(1px) translateZ(0); /* For 3D lifting effect */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+/* Animation for continuous 3D effect */
+@keyframes simpleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.play-gotem-button {
+  animation: simpleFloat 3s infinite ease-in-out;
+}
+
+.play-gotem-button:hover, .play-gotem-button:focus {
+  animation: float 3s ease-in-out infinite;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.play-gotem-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}

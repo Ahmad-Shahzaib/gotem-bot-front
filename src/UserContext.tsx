@@ -37,7 +37,7 @@ const UserContext = createContext<UserContextType>({
 
 // Provider component to wrap around the application
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [userID, setUserID] = useState<string>("1989734040"); // Default userID if not set by Telegram
+  const [userID, setUserID] = useState<string>(""); // Default userID if not set by Telegram
   const [points, setPoints] = useState<number>(0); // Default points
   const [isStar, setIsStar] = useState<boolean>(false); // Default isStar
   const [invitedby, setInvitedby] = useState<string>(""); // Default invitedby

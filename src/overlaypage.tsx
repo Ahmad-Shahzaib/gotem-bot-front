@@ -118,7 +118,7 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
           color: 'white',
           textAlign: 'center',
           padding: '0 16px',
-          zIndex: 9999,
+          zIndex: 99999999999,
         }}
       >
         {/* Three Lines at the Top */}
@@ -192,7 +192,7 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
           color: 'white',
           textAlign: 'center',
           padding: '0 16px',
-          zIndex: 9999,
+          zIndex: 9999999999999,
         }}
       >
         {/* Three Lines at the Top */}
@@ -265,7 +265,7 @@ const OverlayPage: React.FC<OverlayPageProps> = ({ closeOverlay, userAdded }) =>
           color: 'white',
           textAlign: 'center',
           padding: '0 16px',
-          zIndex: 9999,
+          zIndex: 9999999999,
         }}
       >
         {/* Three Lines at the Top */}
