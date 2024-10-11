@@ -113,7 +113,7 @@ console.log(initData);
           <div className="info-cell">Multiplier: {gameData.multiplier}</div>
         </div>
         {gameData.hookspeed === 1 && gameData.multiplier === 1 && (
-          <p>Go to store to buy it at the cheapest</p>
+          <p>Go to store to buy it at the cheapest | Dont buy twice!</p>
         )}
       </div>
 
