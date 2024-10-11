@@ -100,7 +100,7 @@ const App: React.FC = () => {
     [key: string]: "not_started" | "loading" | "claimable" | "completed";
   }>({});
   // const [lastClaimedTime, setLastClaimedTime] = useState<number | null>(null);
-  const [refertotalStatus, setRefertotalStatus] = useState<string | null>(
+  const [_refertotalStatus, setRefertotalStatus] = useState<string | null>(
     "NULL"
   );
   const [showOverlayPage, setShowOverlayPage] = useState(false);
@@ -406,23 +406,42 @@ const App: React.FC = () => {
   };
 
 
+// Function to handle the Invite Friends button click
+const handleInviteFriendsClick = async () => {
+    const initData = window.Telegram.WebApp.initData || '';
 
-  const handleInviteFriendsClick = async () => {
-    if (refertotalStatus === "NULL" || !refertotalStatus) {
-      showAlert("Not Enough Friends");
-    } else if (refertotalStatus === "Approve") {
-      const initData = window.Telegram.WebApp.initData || '';
+    try {
+      // Make an API call to check the invitations
+      const response = await fetch(
+        `https://api-dapp.gotem.io/get_invitations?UserId=${userID}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            'X-Telegram-Init-Data': initData, // Add initData to headers
+          },
+        }
+      );
 
-      try {
+      if (!response.ok) {
+        throw new Error('Failed to fetch invitations');
+      }
+
+      const data = await response.json();
+
+      // Check if referrewarded is equal to 5
+      if (data.referrewarded === 5) {
+        // Proceed to update user data and reward them
         await fetch("https://api-dapp.gotem.io/update_user", {
           method: "POST",
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
             'X-Telegram-Init-Data': initData,
           },
           body: JSON.stringify({ UserId: userID, Refertotal: "Done" }),
         });
 
+        // Update task status and points
         setTaskStatus((prevState) => ({
           ...prevState,
           InviteFriends: "completed",
@@ -433,14 +452,17 @@ const App: React.FC = () => {
         showAlert(
           "Congratulations! You have completed the Invite 5 Friends task and earned 25000 gotEM."
         );
-      } catch (error) {
-        console.error("Failed to complete Invite Friends task:", error);
-        showAlert(
-          "An error occurred while completing the task. Please try again later."
-        );
+      } else {
+        showAlert("You have not invited enough friends yet.");
       }
+    } catch (error) {
+      console.error("Failed to complete Invite Friends task:", error);
+      showAlert(
+        "An error occurred while completing the task. Please try again later."
+      );
     }
-  };
+
+};
 
   // Handle clicks for fetched tasks
   const handleFetchedTaskClick = (task: any) => {
