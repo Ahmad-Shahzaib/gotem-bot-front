@@ -394,7 +394,7 @@ const App: React.FC = () => {
         ...prevState,
         [taskKey]: "claimable",
       }));
-    }, 5000); 
+    }, 59000); 
   };
 
   const handleTaskClaim = (
@@ -465,7 +465,7 @@ const App: React.FC = () => {
         ...prevState,
         [task.taskid.toString()]: "claimable",
       }));
-    }, 5000); // Adjust the delay as needed
+    }, 59000); // Adjust the delay as needed
   };
 
   // Handle claims for fetched tasks
